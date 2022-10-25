@@ -1,2 +1,4 @@
+sudo -E su $1
+
 /bin/bash
-source cd ~
+cd ~
