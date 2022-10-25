@@ -25,11 +25,11 @@ Add_file () {
 Setup () {
     # Bash
     chmod +x ./bashsetup.sh
-    ./bashsetup.sh
+    source ./bashsetup.sh
 
     # Vim
     chmod +x ./vimsetup.sh
-    ./vimsetup.sh
+    source ./vimsetup.sh
 }
 
 while getopts ":huas:" option; do
