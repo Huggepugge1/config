@@ -27,7 +27,7 @@ Setup () {
     ./vimsetup
 }
 
-while getopts ":hua:" option; do
+while getopts ":huas:" option; do
    case $option in
       h) # display Help
          Help
