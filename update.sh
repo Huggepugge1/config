@@ -13,16 +13,12 @@ Help () {
 }
 
 Update_files () {
-    files=$(echo "$(cat .files.txt | sed "s/USER/$USER/g")")
-    files=($files)
+    readarray -d "," -t files <<< $1
     for file in "${files[@]}"; do
-        current_file=$(echo "$file" | rev | cut -d "/" -f 1| rev)
-        cp $file ./files/${current_file};
+        file=$(echo $file | tr -d " ")
+        file_path=$(echo "/home/$USER/$file")
+        cp $file_path "./files/$file";
     done
-}
-
-Add_file () {
-    echo "$1" >> .files.txt
 }
 
 Bash_setup () {
@@ -51,15 +47,13 @@ Setup () {
     done
 }
 
-while getopts "hus:a:" option; do
+while getopts "hu:s:" option; do
    case $option in
       h) # display Help
          Help
          exit;;
       u) # Add files to repo
-         Update_files;;
-      a) # Add file to .file.txt
-         Add_file "$OPTARG";;
+         Update_files "$OPTARG";;
       s) #Setup new account
          Setup "$OPTARG";;
      \?) # Invalid option
