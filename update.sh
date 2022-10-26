@@ -1,3 +1,5 @@
+#!/bin/bash
+
 Help () {
     # Display help
 
@@ -7,6 +9,7 @@ Help () {
     echo "  -v:          verbose"
     echo "  -a: [file]   add file"
     echo "  -u:          update and add files to repo"
+    echo "  -s:          setup computer"
 }
 
 Update_files () {
@@ -22,17 +25,33 @@ Add_file () {
     echo "$1" >> .files.txt
 }
 
-Setup () {
-    # Bash
+Bash_setup () {
     chmod +x ./bashsetup.sh
-    ./bashsetup.sh
-
-    # Vim
-    chmod +x ./vimsetup.sh
-    ./vimsetup.sh
+    source ./bashsetup.sh
 }
 
-while getopts ":huas:" option; do
+Vim_setup () {
+    chmod +x ./vimsetup.sh
+    source ./vimsetup.sh
+}
+
+Setup () {
+    readarray -d "," -t setup <<< $1
+    for item in "${setup[@]}"; do
+        item=$(echo $item | tr -d " ")
+        if [[ "bash" == "$item" ]]
+	    then
+	        Bash_setup
+	    elif [[ "vim" == "$item" ]]
+	    then
+	        Vim_setup
+	    else
+	        echo "invalid argument: $item"; 
+    	fi
+    done
+}
+
+while getopts "hus:a:" option; do
    case $option in
       h) # display Help
          Help
@@ -42,7 +61,7 @@ while getopts ":huas:" option; do
       a) # Add file to .file.txt
          Add_file "$OPTARG";;
       s) #Setup new account
-         Setup;;
+         Setup "$OPTARG";;
      \?) # Invalid option
          echo "Error: Invalid option $option"
          exit;;
