@@ -113,3 +113,4 @@ if ! shopt -oq posix; then
 fi
 
 alias la="ls -la"
+alias picogrep="grep -oE picoCTF{.*?} --color=none"

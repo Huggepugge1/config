@@ -260,5 +260,6 @@ fi
 export PATH="/usr/local/sbin:/usr/sbin:/sbin:/usr/local/bin:/usr/bin:/bin:/usr/local/games:/usr/games:~/.local/bin"
 
 alias save="source /opt/save.sh"
+alias complete="source /opt/complete.sh"
 alias chall="~/CTFs/chall.sh"
 alias picogrep="grep -oE picoCTF{.*?} --color=none"
